@@ -1,0 +1,4708 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "My Organizations API",
+    "description": "My Organizations API",
+    "termsOfService": "https://auth0.com/web-terms/",
+    "version": "1.0.0",
+    "license": {
+      "name": "UNLICENSED",
+      "url": "https://auth0.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://{tenantDomain}/my-org",
+      "variables": {
+        "tenantDomain": {
+          "default": "{TENANT}.auth0.com",
+          "description": "Auth0 Tenant Domain"
+        }
+      }
+    }
+  ],
+  "tags": [
+    {
+      "name": "config",
+      "description": "Configuration",
+      "x-displayName": "Configuration"
+    },
+    {
+      "name": "orgDetails",
+      "description": "Manage details related to your organization.",
+      "x-displayName": "Organization Details"
+    },
+    {
+      "name": "idpManagement",
+      "description": "Manage Identity Providers for your Organization.",
+      "x-displayName": "Identity Provider Management"
+    },
+    {
+      "name": "orgDomainManagement",
+      "description": "Manage domains related to your organization",
+      "x-displayName": "Organization Domain Management"
+    },
+    {
+      "name": "orgMemberManagement",
+      "description": "Manage members related to your organization",
+      "x-displayName": "Organization Member Management"
+    }
+  ],
+  "paths": {
+    "/config": {
+      "get": {
+        "summary": "Get Configuration",
+        "description": "Retrieve the configuration for the /org API. This will give the components all of the information they will need to be successful. The SDK provider for the components should manage fetching and caching this information for all components.",
+        "tags": ["config"],
+        "operationId": "GetOrgConfiguration",
+        "x-operation-group": ["organization", "configuration"],
+        "x-operation-name": "get",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["read:my_org:config"]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:config"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LocaleQueryParameter"
+          },
+          {
+            "$ref": "#/components/parameters/FieldsQueryParameter"
+          },
+          {
+            "$ref": "#/components/parameters/IncludeFieldsQueryParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetConfigurationResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/details": {
+      "get": {
+        "summary": "Get organization details",
+        "description": "Retrieve details for an Organization.",
+        "tags": ["orgDetails"],
+        "operationId": "GetOrganizationDetails",
+        "x-operation-group": "organizationDetails",
+        "x-operation-name": "get",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["read:my_org:details"]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:details"]
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetOrganizationDetailsResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Modify organization details",
+        "description": "Update the details of a specific Organization, such as display name and branding options.",
+        "tags": ["orgDetails"],
+        "operationId": "UpdateOrganizationDetails",
+        "x-operation-group": "organizationDetails",
+        "x-operation-name": "update",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["update:my_org:details"]
+          },
+          {
+            "OAuth2AuthCode": ["update:my_org:details"]
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UpdateOrganizationDetailsRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UpdateOrganizationDetailsResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientErrorInvalidJsonResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/domains": {
+      "get": {
+        "summary": "List Organization Domains",
+        "description": "Lists all domains pending and verified for an organization.",
+        "tags": ["orgDomainManagement"],
+        "operationId": "ListOrganizationDomains",
+        "x-operation-group": ["organization", "domains"],
+        "x-operation-name": "list",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["read:my_org:domains"]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:domains"]
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ListOrganizationDomainsResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a Domain for an Organization",
+        "description": "Create a new domain for an organization.",
+        "tags": ["orgDomainManagement"],
+        "operationId": "CreateOrganizationDomain",
+        "x-operation-group": ["organization", "domains"],
+        "x-operation-name": "create",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["create:my_org:domains"]
+          },
+          {
+            "OAuth2AuthCode": ["create:my_org:domains"]
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreateOrganizationDomainRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreateOrganizationDomainResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientErrorInvalidJsonResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/domains/{domain_id}": {
+      "get": {
+        "summary": "Get Organization Domain",
+        "description": "Retrieve a domain for an organization.",
+        "tags": ["orgDomainManagement"],
+        "operationId": "GetOrganizationDomain",
+        "x-operation-group": ["organization", "domains"],
+        "x-operation-name": "get",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["read:my_org:domains"]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:domains"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OrgDomainIdPathParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetOrganizationDomainResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Domain from Organization",
+        "description": "Remove a domain from this organization.",
+        "tags": ["orgDomainManagement"],
+        "operationId": "DeleteOrganizationDomain",
+        "x-operation-group": ["organization", "domains"],
+        "x-operation-name": "delete",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["delete:my_org:domains"]
+          },
+          {
+            "OAuth2AuthCode": ["delete:my_org:domains"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OrgDomainIdPathParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/DeleteOrganizationDomainResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrgOrIdpResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/domains/{domain_id}/verify": {
+      "post": {
+        "summary": "Start Domain Verification",
+        "description": "Get a verification text and start the domain verification process for a particular domain.",
+        "tags": ["orgDomainManagement"],
+        "operationId": "CreateOrganizationDomainVerification",
+        "x-operation-group": ["organization", "domains", "verify"],
+        "x-operation-name": "create",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["update:my_org:domains"]
+          },
+          {
+            "OAuth2AuthCode": ["update:my_org:domains"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OrgDomainIdPathParameter"
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/StartOrganizationDomainVerificationResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/domains/{domain_id}/identity-providers": {
+      "get": {
+        "summary": "Get Identity Providers associated with an Organization Domain",
+        "description": "Retrieve the list of identity providers that have a specific organization domain alias.",
+        "tags": ["orgDomainManagement"],
+        "operationId": "GetOrganizationDomainIdentityProviders",
+        "x-operation-group": ["organization", "domains", "identityProviders"],
+        "x-operation-name": "get",
+        "security": [
+          {
+            "OAuth2ClientCredentials": [
+              "read:my_org:identity_providers_domains"
+            ]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:identity_providers_domains"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OrgDomainIdPathParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ListDomainIdentityProvidersResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/identity-providers": {
+      "get": {
+        "summary": "List Identity Providers",
+        "description": "List the identity providers associated with this organization.",
+        "tags": ["idpManagement"],
+        "operationId": "ListOrganizationIdentityProviders",
+        "x-operation-group": ["organization", "identityProviders"],
+        "x-operation-name": "list",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["read:my_org:identity_providers"]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:identity_providers"]
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ListIdentityProvidersResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Identity Provider",
+        "description": "Create an identity provider associated with this organization.",
+        "tags": ["idpManagement"],
+        "operationId": "CreateOrganizationIdentityProvider",
+        "x-operation-group": ["organization", "identityProviders"],
+        "x-operation-name": "create",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["create:my_org:identity_providers"]
+          },
+          {
+            "OAuth2AuthCode": ["create:my_org:identity_providers"]
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreateIdentityProviderRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreateIdentityProviderResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientErrorInvalidJsonResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/identity-providers/{idp_id}": {
+      "get": {
+        "summary": "Get Identity Provider",
+        "description": "Retrieve the details for one particular identity-provider.",
+        "tags": ["idpManagement"],
+        "operationId": "GetOrganizationIdentityProvider",
+        "x-operation-group": ["organization", "identityProviders"],
+        "x-operation-name": "get",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["read:my_org:identity_providers"]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:identity_providers"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdpIdPathParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetIdentityProviderResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrgOrIdpResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Identity Provider",
+        "description": "Update an identity provider associated with this organization.",
+        "tags": ["idpManagement"],
+        "operationId": "UpdateOrganizationIdentityProvider",
+        "x-operation-group": ["organization", "identityProviders"],
+        "x-operation-name": "update",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["update:my_org:identity_providers"]
+          },
+          {
+            "OAuth2AuthCode": ["update:my_org:identity_providers"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdpIdPathParameter"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UpdateIdentityProviderRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UpdateIdentityProviderResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientErrorInvalidJsonResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrgOrIdpResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Identity Provider",
+        "description": "Delete an identity provider from this organization.",
+        "tags": ["idpManagement"],
+        "operationId": "DeleteOrganizationIdentityProvider",
+        "x-operation-group": ["organization", "identityProviders"],
+        "x-operation-name": "delete",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["delete:my_org:identity_providers"]
+          },
+          {
+            "OAuth2AuthCode": ["delete:my_org:identity_providers"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdpIdPathParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/DeleteIdentityProviderResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrgOrIdpResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/identity-providers/{idp_id}/detach": {
+      "post": {
+        "summary": "Detach Identity Provider from Organization",
+        "description": "Delete underlying identity provider from this organization.",
+        "tags": ["idpManagement"],
+        "operationId": "DetachOrganizationIdentityProviderDomain",
+        "x-operation-group": ["organization", "identityProviders"],
+        "x-operation-name": "update",
+        "security": [
+          {
+            "OAuth2ClientCredentials": [
+              "update:my_org:identity_providers_detach"
+            ]
+          },
+          {
+            "OAuth2AuthCode": ["update:my_org:identity_providers_detach"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdpIdPathParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/DetachIdpProviderResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientErrorInvalidJsonResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrgOrIdpResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/identity-providers/{idp_id}/domains": {
+      "post": {
+        "summary": "Associate Domain with Identity Provider",
+        "description": "Add a domain to the identity provider's list of domains for [Home Realm Discovery (HRD)](https://auth0.com/docs/get-started/architecture-scenarios/business-to-business/authentication#home-realm-discovery). The domain passed must be claimed and verified by this organization.",
+        "tags": ["idpManagement"],
+        "operationId": "CreateOrganizationIdentityProviderDomain",
+        "x-operation-group": ["organization", "identityProviders", "domains"],
+        "x-operation-name": "create",
+        "security": [
+          {
+            "OAuth2ClientCredentials": [
+              "create:my_org:identity_provider_domains"
+            ]
+          },
+          {
+            "OAuth2AuthCode": ["create:my_org:identity_provider_domains"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdpIdPathParameter"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreateIdpDomainRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreateIdpDomainResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientErrorInvalidJsonResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/identity-providers/{idp_id}/domains/{domain_name}": {
+      "delete": {
+        "summary": "Remove Domain from Identity Provider",
+        "description": "Remove a domain from an identity provider.",
+        "tags": ["idpManagement"],
+        "operationId": "DeleteOrganizationIdentityProviderDomain",
+        "x-operation-group": ["organization", "identityProviders", "domains"],
+        "x-operation-name": "delete",
+        "security": [
+          {
+            "OAuth2ClientCredentials": [
+              "delete:my_org:identity_provider_domains"
+            ]
+          },
+          {
+            "OAuth2AuthCode": ["delete:my_org:identity_provider_domains"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdpIdPathParameter"
+          },
+          {
+            "$ref": "#/components/parameters/OrgDomainNamePathParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/DeleteIdpDomainResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrgOrIdpResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/identity-providers/{idp_id}/provisioning": {
+      "get": {
+        "summary": "Get Provisioning Configuration",
+        "description": "Retrieve the Provisioning configuration for this identity provider.",
+        "tags": ["idpManagement"],
+        "operationId": "GetIdpProvisioningConfiguration",
+        "x-operation-group": [
+          "organization",
+          "identityProviders",
+          "provisioning"
+        ],
+        "x-operation-name": "get",
+        "security": [
+          {
+            "OAuth2ClientCredentials": [
+              "read:my_org:identity_provider_provisioning"
+            ]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:identity_provider_provisioning"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdpIdPathParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetIdPProvisioningConfigResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Provisioning Configuration",
+        "description": "Create the Provisioning configuration for this identity provider.",
+        "tags": ["idpManagement"],
+        "operationId": "CreateIdpProvisioningConfiguration",
+        "x-operation-group": [
+          "organization",
+          "identityProviders",
+          "provisioning"
+        ],
+        "x-operation-name": "create",
+        "security": [
+          {
+            "OAuth2ClientCredentials": [
+              "create:my_org:identity_provider_provisioning"
+            ]
+          },
+          {
+            "OAuth2AuthCode": ["create:my_org:identity_provider_provisioning"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdpIdPathParameter"
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreateIdPProvisioningConfigResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientErrorInvalidJsonResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Provisioning Configuration",
+        "description": "Delete the Provisioning configuration for an identity provider.",
+        "tags": ["idpManagement"],
+        "operationId": "DeleteProvisioningConfiguration",
+        "x-operation-group": [
+          "organization",
+          "identityProviders",
+          "provisioning"
+        ],
+        "x-operation-name": "delete",
+        "security": [
+          {
+            "OAuth2ClientCredentials": [
+              "delete:my_org:identity_provider_provisioning"
+            ]
+          },
+          {
+            "OAuth2AuthCode": ["delete:my_org:identity_provider_provisioning"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdpIdPathParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/DeleteIdpProvisioningConfigResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrgOrIdpResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/identity-providers/{idp_id}/provisioning/scim-tokens": {
+      "get": {
+        "summary": "List Provisioning SCIM Tokens",
+        "description": "List the Provisioning SCIM tokens for this identity provider.",
+        "tags": ["idpManagement"],
+        "operationId": "ListIdpProvisioningScimTokens",
+        "x-operation-group": [
+          "organization",
+          "identityProviders",
+          "provisioning",
+          "scimTokens"
+        ],
+        "x-operation-name": "list",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["read:my_org:scim_tokens"]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:scim_tokens"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdpIdPathParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ListIdpProvisioningScimTokensResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Provisioning SCIM Token",
+        "description": "Create a Provisioning SCIM token for this identity provider.",
+        "tags": ["idpManagement"],
+        "operationId": "CreateIdpProvisioningScimToken",
+        "x-operation-group": [
+          "organization",
+          "identityProviders",
+          "provisioning",
+          "scimTokens"
+        ],
+        "x-operation-name": "create",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["create:my_org:scim_tokens"]
+          },
+          {
+            "OAuth2AuthCode": ["create:my_org:scim_tokens"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdpIdPathParameter"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreateIdpProvisioningScimTokenRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreateIdpProvisioningScimTokenResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientErrorInvalidJsonResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Revoke Provisioning SCIM Token",
+        "description": "Delete a Provisioning SCIM configuration for an identity provider.",
+        "tags": ["idpManagement"],
+        "operationId": "DeleteIdpProvisioningScimToken",
+        "x-operation-group": [
+          "organization",
+          "identityProviders",
+          "provisioning",
+          "scimTokens"
+        ],
+        "x-operation-name": "delete",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["delete:my_org:scim_tokens"]
+          },
+          {
+            "OAuth2AuthCode": ["delete:my_org:scim_tokens"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdpIdPathParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/DeleteIdpProvisioningScimTokenResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrgOrIdpResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/members": {
+      "get": {
+        "summary": "List Organization Members",
+        "description": "Lists all members that belong to the organization.",
+        "tags": ["orgMemberManagement"],
+        "operationId": "ListOrganizationMembers",
+        "x-operation-group": ["organization", "members"],
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListOrganizationMembersRequestParameters",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["read:my_org:members"]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:members"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LuceneQueryParameter"
+          },
+          {
+            "$ref": "#/components/parameters/FieldsQueryParameter"
+          },
+          {
+            "$ref": "#/components/parameters/IncludeFieldsQueryParameter"
+          },
+          {
+            "$ref": "#/components/parameters/PaginationFromQueryParameter"
+          },
+          {
+            "$ref": "#/components/parameters/PaginationTakeQueryParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ListOrganizationMembersResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/members/{user_id}": {
+      "get": {
+        "summary": "Get Member",
+        "description": "Retrieve a single member of the organization.",
+        "tags": ["orgMemberManagement"],
+        "operationId": "GetOrganizationMember",
+        "x-operation-group": ["organization", "members"],
+        "x-operation-name": "get",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["read:my_org:members"]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:members"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OrgUserIdPathParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetOrganizationMemberResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Member",
+        "description": "Delete a single user's membership.",
+        "tags": ["orgMemberManagement"],
+        "operationId": "DeleteOrganizationMember",
+        "x-operation-group": ["organization", "members"],
+        "x-operation-name": "delete",
+        "x-operation-request-parameters-name": "DeleteOrganizationMemberRequestParameters",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["delete:my_org:members"]
+          },
+          {
+            "OAuth2AuthCode": ["delete:my_org:members"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OrgUserIdPathParameter"
+          },
+          {
+            "$ref": "#/components/parameters/OrgDeleteUserQueryParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/DeleteOrganizationMemberResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrgOrIdpResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/invitations": {
+      "get": {
+        "summary": "List Members Invitations",
+        "description": "Get a list of pending invitations.",
+        "tags": ["orgMemberManagement"],
+        "operationId": "ListInvitations",
+        "x-operation-group": ["organization", "invitations"],
+        "x-operation-name": "list",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["read:my_org:member_invitations"]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:member_invitations"]
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ListMembersInvitationsResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Member Invitation",
+        "description": "Create a new invitation for a member.",
+        "tags": ["orgMemberManagement"],
+        "operationId": "CreateInvitation",
+        "x-operation-group": ["organization", "invitations"],
+        "x-operation-name": "create",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["create:my_org:member_invitations"]
+          },
+          {
+            "OAuth2AuthCode": ["create:my_org:member_invitations"]
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CreateMemberInvitationRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreateMemberInvitationResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientErrorInvalidJsonResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/invitations/{invitation_id}": {
+      "get": {
+        "summary": "Get a Member Invitation",
+        "description": "Get a pending invitation by ID.",
+        "tags": ["orgMemberManagement"],
+        "operationId": "GetInvitation",
+        "x-operation-group": ["organization", "invitations"],
+        "x-operation-name": "get",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["read:my_org:member_invitations"]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:member_invitations"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/InvitationIdPathParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetMemberInvitationResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Revoke Member Invitation",
+        "description": "Delete a member invitation by id for an Organization.",
+        "tags": ["orgMemberManagement"],
+        "operationId": "DeleteInvitation",
+        "x-operation-group": ["organization", "invitations"],
+        "x-operation-name": "delete",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["delete:my_org:member_invitations"]
+          },
+          {
+            "OAuth2AuthCode": ["delete:my_org:member_invitations"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/InvitationIdPathParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/DeleteMemberInvitationResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrgOrIdpResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/members/{user_id}/roles": {
+      "get": {
+        "summary": "Get Member Roles",
+        "description": "Retrieve the roles for a single member.",
+        "tags": ["orgMemberManagement"],
+        "operationId": "ListOrgMemberRoles",
+        "x-operation-group": ["organization", "members", "roles"],
+        "x-operation-name": "list",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["read:my_org:member_roles"]
+          },
+          {
+            "OAuth2AuthCode": ["read:my_org:member_roles"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OrgUserIdPathParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ListOrganizationMemberRolesResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      },
+      "post": {
+        "summary": "Assign Member Roles",
+        "description": "Add a role to a member.",
+        "tags": ["orgMemberManagement"],
+        "operationId": "CreateOrganizationMemberRole",
+        "x-operation-group": ["organization", "members", "roles"],
+        "x-operation-name": "create",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["create:my_org:member_roles"]
+          },
+          {
+            "OAuth2AuthCode": ["create:my_org:member_roles"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OrgUserIdPathParameter"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AssignOrganizationMemberRoleRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/AssignOrganizationMemberRoleResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClientErrorInvalidJsonResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrganizationResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    },
+    "/members/{user_id}/roles/{role_id}": {
+      "delete": {
+        "summary": "Delete Member Role",
+        "description": "Remove a role from a member.",
+        "tags": ["orgMemberManagement"],
+        "operationId": "DeleteOrganizationMemberRole",
+        "x-operation-group": ["organization", "members", "roles"],
+        "x-operation-name": "delete",
+        "security": [
+          {
+            "OAuth2ClientCredentials": ["delete:my_org:member_roles"]
+          },
+          {
+            "OAuth2AuthCode": ["delete:my_org:member_roles"]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/OrgUserIdPathParameter"
+          },
+          {
+            "$ref": "#/components/parameters/OrgMemberRoleIdPathParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/DeleteOrganizationMemberRoleResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ClientErrorUnauthorizedResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClientErrorInsufficientScopeResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ClientErrorNotFoundOrgOrIdpResponse"
+          },
+          "429": {
+            "$ref": "#/components/responses/ClientErrorTooManyRequestsResponse"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "examples": {
+      "CreateIdentityProviderRequestExample": {
+        "value": {
+          "name": "oidcIdp",
+          "display_name": "OIDC IdP",
+          "strategy": "oidc",
+          "show_as_button": true,
+          "assign_membership_on_login": false,
+          "domains": ["mydomain.com"],
+          "is_enabled": true,
+          "options": {
+            "type": "front_channel",
+            "client_id": "a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d",
+            "client_secret": "KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp",
+            "discovery_url": "https://{yourDomain}/.well-known/openid-configuration"
+          }
+        }
+      },
+      "UpdateIdentityProviderRequestExample": {
+        "value": {
+          "display_name": "OIDC IdP",
+          "show_as_button": true,
+          "assign_membership_on_login": false,
+          "is_enabled": true,
+          "strategy": "oidc",
+          "options": {
+            "type": "front_channel",
+            "client_id": "a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d",
+            "client_secret": "KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp",
+            "discovery_url": "https://{yourDomain}/.well-known/openid-configuration"
+          }
+        }
+      },
+      "UpdateOrganizationDetailsRequestExample": {
+        "value": {
+          "display_name": "Test Organization",
+          "branding": {
+            "logo_url": "http://example.com/logo.png",
+            "colors": {
+              "primary": "#000000",
+              "page_background": "#FFFFFF"
+            }
+          }
+        }
+      },
+      "GetOrganizationDetailsResponseExample": {
+        "value": {
+          "id": "org_zW1UHutvkVWSWdCC",
+          "name": "testorg",
+          "display_name": "Test Organization",
+          "branding": {
+            "logo_url": "https://example.com/logo.png",
+            "colors": {
+              "primary": "#000000",
+              "page_background": "#FFFFFF"
+            }
+          }
+        }
+      },
+      "UpdateOrganizationDetailsResponseExample": {
+        "value": {
+          "id": "org_zW1UHutvkVWSWdCC",
+          "name": "testorg",
+          "display_name": "Test Organization",
+          "branding": {
+            "logo_url": "https://example.com/logo.png",
+            "colors": {
+              "primary": "#000000",
+              "page_background": "#FFFFFF"
+            }
+          }
+        }
+      },
+      "ListIdentityProviderResponseExample": {
+        "value": {
+          "identity_providers": [
+            {
+              "id": "con_zW1UHutvkVWSWdCC",
+              "name": "oidcIdp",
+              "display_name": "OIDC IdP",
+              "strategy": "oidc",
+              "show_as_button": true,
+              "assign_membership_on_login": false,
+              "access_level": "full",
+              "domains": ["mydomain.com"],
+              "is_enabled": true,
+              "options": {
+                "type": "front_channel",
+                "client_id": "a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d",
+                "client_secret": "KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp",
+                "discovery_url": "https://{yourDomain}/.well-known/openid-configuration"
+              }
+            },
+            {
+              "id": "con_zW1UHutvkVWSWdCD",
+              "name": "samlIdp",
+              "display_name": "Saml IdP",
+              "strategy": "samlp",
+              "show_as_button": true,
+              "assign_membership_on_login": false,
+              "access_level": "limited",
+              "domains": ["mydomain.com"],
+              "is_enabled": true,
+              "options": {
+                "signatureAlgorithm": "rsa-sha256",
+                "digestAlgorithm": "sha256",
+                "protocolBinding": "HTTP-POST",
+                "signSAMLRequest": true,
+                "bindingMethod": "HTTP-Redirect",
+                "metadataUrl": "a.metadata.url",
+                "cert": "MIIDQjCCAiugAwIBAgIRAMp+cW+SgQ2Yh7fF8v8b0OQwDQYJKoZIhvcNAQELBQAw...",
+                "idpInitiated": {
+                  "enabled": true,
+                  "client_id": "a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d",
+                  "client_protocol": "SAML",
+                  "client_authorizequery": "redirect_uri=https://jwt.io&scope=openid email&response_type=token"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "CreateIdentityProviderResponseExample": {
+        "value": {
+          "id": "con_zW1UHutvkVWSWdCC",
+          "name": "oidcIdp",
+          "display_name": "OIDC IdP",
+          "strategy": "oidc",
+          "show_as_button": true,
+          "assign_membership_on_login": false,
+          "access_level": "full",
+          "domains": ["mydomain.com"],
+          "is_enabled": true,
+          "options": {
+            "type": "front_channel",
+            "client_id": "client_a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7did",
+            "client_secret": "KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp",
+            "discovery_url": "https://{yourDomain}/.well-known/openid-configuration"
+          }
+        }
+      },
+      "GetIdentityProviderResponseExample": {
+        "value": {
+          "id": "con_zW1UHutvkVWSWdCC",
+          "name": "oidcIdp",
+          "display_name": "OIDC IdP",
+          "strategy": "oidc",
+          "show_as_button": true,
+          "assign_membership_on_login": false,
+          "access_level": "readonly",
+          "domains": ["mydomain.com"],
+          "is_enabled": true,
+          "options": {
+            "type": "front_channel",
+            "client_id": "a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d",
+            "client_secret": "KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp",
+            "discovery_url": "https://{yourDomain}/.well-known/openid-configuration"
+          }
+        }
+      },
+      "UpdateIdentityProviderResponseExample": {
+        "value": {
+          "id": "con_zW1UHutvkVWSWdCC",
+          "name": "oidcIdp",
+          "display_name": "OIDC IdP",
+          "strategy": "oidc",
+          "show_as_button": true,
+          "assign_membership_on_login": false,
+          "access_level": "full",
+          "domains": ["mydomain.com"],
+          "is_enabled": true,
+          "options": {
+            "type": "front_channel",
+            "client_id": "a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d",
+            "client_secret": "KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp",
+            "discovery_url": "https://{yourDomain}/.well-known/openid-configuration"
+          }
+        }
+      },
+      "CreateOrganizationDomainRequestExample": {
+        "value": {
+          "domain": "acme.com"
+        }
+      },
+      "CreateOrganizationDomainResponseExample": {
+        "value": {
+          "id": "ord_aW1UHetvkBWSWdCC",
+          "org_id": "org_zW1UHutvkVWSWdCC",
+          "domain": "acme.com",
+          "status": "pending",
+          "verification_text": "dove_text=asdfpiujnlewp-23849jdkfjzxcfpiawer",
+          "verification_host": "_ss-verification.org_zW1UHutvkVWSWdCC.acme.com"
+        }
+      },
+      "GetOrganizationDomainResponseExample": {
+        "value": {
+          "id": "ord_aW1UHetvkBWSWdCC",
+          "org_id": "org_zW1UHutvkVWSWdCC",
+          "domain": "acme.com",
+          "status": "pending",
+          "verification_text": "dove_text=asdfpiujnlewp-23849jdkfjzxcfpiawer",
+          "verification_host": "_ss-verification.org_zW1UHutvkVWSWdCC.acme.com"
+        }
+      },
+      "ListOrganizationDomainsResponseExample": {
+        "value": {
+          "organization_domains": [
+            {
+              "id": "ord_aW1UHetvkBWSWdCC",
+              "org_id": "org_zW1UHutvkVWSWdCC",
+              "domain": "acme.com",
+              "status": "pending",
+              "verification_text": "dove_text=asdfpiujnlewp-23849jdkfjzxcfpiawer",
+              "verification_host": "_ss-verification.org_zW1UHutvkVWSWdCC.acme.com"
+            },
+            {
+              "id": "ord_zW1UHetvkBWSWdCD",
+              "org_id": "org_nW1UHutvkVWSWdCG",
+              "domain": "roadrunner.com",
+              "status": "failed",
+              "verification_text": "dove_text=bcxzpiujnlewp-23849jdkfjzxcfpiawer",
+              "verification_host": "_ss-verification.org_nW1UHutvkVWSWdCG.acme.com"
+            }
+          ]
+        }
+      },
+      "ListDomainIdentityProvidersResponseExample": {
+        "value": {
+          "identity_providers": [
+            {
+              "id": "con_2CZPv6IY0gWzDaQJ",
+              "display_name": "Acme Engineering",
+              "name": "acme-engineering"
+            },
+            {
+              "id": "con_2CZPv6IY0gWzDaQG",
+              "display_name": "Acme Engineering 2",
+              "name": "acme-engineering-2"
+            }
+          ]
+        }
+      },
+      "StartOrganizationDomainVerificationResponseExample": {
+        "value": {
+          "id": "ord_aW1UHetvkBWSWdCC",
+          "org_id": "org_zW1UHutvkVWSWdCC",
+          "domain": "acme.com",
+          "status": "pending",
+          "verification_text": "dove_text=asdfpiujnlewp-23849jdkfjzxcfpiawer",
+          "verification_host": "_ss-verification.org_zW1UHutvkVWSWdCC.acme.com"
+        }
+      },
+      "CreateIdpProvisioningConfigResponseExample": {
+        "value": {
+          "identity_provider_id": "con_2CZPv6IY0gWzDaQJ",
+          "identity_provider_name": "EC-org-gaZPTTOS42pReSzs-id-ready2",
+          "strategy": "okta",
+          "method": "scim",
+          "fields": [
+            {
+              "provisioning_field": "userName",
+              "user_attribute": "preferred_username",
+              "description": "A longer way to describe this field",
+              "label": "Preferred username"
+            },
+            {
+              "provisioning_field": "emails[primary eq true].value",
+              "user_attribute": "email",
+              "description": "A longer way to describe this field",
+              "label": "Email"
+            },
+            {
+              "provisioning_field": "externalId",
+              "user_attribute": "external_id",
+              "description": "A longer way to describe this field",
+              "label": "External ID"
+            },
+            {
+              "provisioning_field": "active",
+              "user_attribute": "blocked",
+              "description": "A longer way to describe this field",
+              "label": "Blocked"
+            }
+          ],
+          "updated_on": "2025-05-15T23:32:52.351Z",
+          "created_at": "2025-05-15T23:32:52.351Z",
+          "user_id_attribute": "externalId"
+        }
+      },
+      "GetIdPProvisioningConfigResponseExample": {
+        "value": {
+          "identity_provider_id": "con_2CZPv6IY0gWzDaQJ",
+          "identity_provider_name": "EC-org-gaZPTTOS42pReSzs-id-ready2",
+          "strategy": "okta",
+          "method": "scim",
+          "fields": [
+            {
+              "provisioning_field": "userName",
+              "user_attribute": "preferred_username",
+              "description": "A longer way to describe this field",
+              "label": "Preferred username"
+            },
+            {
+              "provisioning_field": "emails[primary eq true].value",
+              "user_attribute": "email",
+              "description": "A longer way to describe this field",
+              "label": "Email"
+            },
+            {
+              "provisioning_field": "externalId",
+              "user_attribute": "external_id",
+              "description": "A longer way to describe this field",
+              "label": "External ID"
+            },
+            {
+              "provisioning_field": "active",
+              "user_attribute": "blocked",
+              "description": "A longer way to describe this field",
+              "label": "Blocked"
+            }
+          ],
+          "updated_on": "2025-05-15T23:32:52.351Z",
+          "created_at": "2025-05-15T23:32:52.351Z",
+          "user_id_attribute": "externalId"
+        }
+      },
+      "CreateIdpProvisioningScimTokenRequestExample": {
+        "value": {
+          "token_lifetime": 86400
+        }
+      },
+      "CreateIdpProvisioningScimTokenResponseExample": {
+        "value": {
+          "token_id": "tok_tuz8H9hWQ8LaCkdh",
+          "token": "tok_tuz8H9hWQ8LaCkdh....",
+          "created_at": "2025-04-11T20:11:45.431Z",
+          "valid_until": "2025-04-12T20:11:45.431Z"
+        }
+      },
+      "ListIdpProvisioningScimTokensResponseExample": {
+        "value": {
+          "scim_tokens": [
+            {
+              "token_id": "tok_abc8H9hWQ8LaCkdh",
+              "token": "tok_abc8H9hWQ8LaCkdh....",
+              "created_at": "2025-05-11T20:11:45.431Z",
+              "valid_until": "2025-05-11T20:26:45.431Z"
+            },
+            {
+              "token_id": "tok_tuz8H9hWQ8LaCkdh",
+              "token": "tok_tuz8H9hWQ8LaCkdh....",
+              "created_at": "2025-04-11T20:11:45.431Z",
+              "valid_until": "2025-04-12T20:11:45.431Z"
+            }
+          ]
+        }
+      },
+      "ListOrganizationMembersResponseExample": {
+        "value": {
+          "members": [
+            {
+              "user_id": "auth0|123234235",
+              "roles": [
+                {
+                  "id": "rol_BKI0BKI0BKI0BKI0",
+                  "name": "role1"
+                },
+                {
+                  "id": "rol_BKW1BKIfBKd0BaI0",
+                  "name": "role2"
+                }
+              ],
+              "email": "roadrunner@acme.com"
+            }
+          ]
+        }
+      },
+      "GetOrganizationMemberResponseExample": {
+        "value": {
+          "user_id": "auth0|123234235",
+          "is_guest": false,
+          "roles": [
+            {
+              "id": "rol_BKI0BKI0BKI0BKI0",
+              "name": "role1"
+            },
+            {
+              "id": "rol_BKW1BKIfBKd0BaI0",
+              "name": "role2"
+            }
+          ],
+          "email": "roadrunner@acme.com",
+          "name": "roadrunner",
+          "nickname": "beepbeep",
+          "given_name": "Road",
+          "family_name": "Runner",
+          "updated_at": "2025-05-02T12:00:00Z",
+          "created_at": "2025-05-01T12:00:00Z",
+          "last_login": "2025-05-03T12:00:00Z"
+        }
+      },
+      "ListMembersInvitationsResponseExample": {
+        "value": {
+          "invitations": [
+            {
+              "id": "oui_12345678abcdefgh",
+              "organization_id": "org_12345678abcdefgh",
+              "inviter": {
+                "name": "Allison the Admin"
+              },
+              "invitee": {
+                "email": "user@example.com"
+              },
+              "client_id": "string",
+              "connection_id": "con_2CZPv6IY0gWzDaQJ",
+              "created_at": "2025-04-11T20:11:45.431Z",
+              "expires_at": "2025-04-11T20:11:45.431Z",
+              "roles": ["string"],
+              "invitation_url": "<<initiate_login_url>>?invitation=<invite ID>&organization=org_123234",
+              "ticket_id": "1asdfasd23usjdef"
+            }
+          ]
+        }
+      },
+      "CreateMemberInvitationRequestExample": {
+        "value": {
+          "invitee": {
+            "email": "user@example.com"
+          },
+          "client_id": "string",
+          "connection_id": "con_2CZPv6IY0gWzDaQJ",
+          "ttl_sec": 3600,
+          "roles": ["string"],
+          "send_invitation_email": true
+        }
+      },
+      "CreateMemberInvitationResponseExample": {
+        "value": {
+          "id": "oui_12345678abcdefgh",
+          "organization_id": "org_12345678abcdefgh",
+          "inviter": {
+            "name": "Allison the Admin"
+          },
+          "invitee": {
+            "email": "user@example.com"
+          },
+          "client_id": "string",
+          "connection_id": "con_2CZPv6IY0gWzDaQJ",
+          "created_at": "2025-04-11T20:11:45.431Z",
+          "expires_at": "2025-04-11T20:11:45.431Z",
+          "roles": ["string"],
+          "invitation_url": "<<initiate_login_url>>?invitation=<invite ID>&organization=org_123234",
+          "ticket_id": "1asdfasd23usjdef"
+        }
+      },
+      "GetMemberInvitationResponseExample": {
+        "value": {
+          "id": "oui_12345678abcdefgh",
+          "organization_id": "org_12345678abcdefgh",
+          "inviter": {
+            "name": "Allison the Admin"
+          },
+          "invitee": {
+            "email": "user@example.com"
+          },
+          "client_id": "string",
+          "connection_id": "con_2CZPv6IY0gWzDaQJ",
+          "created_at": "2025-04-11T20:11:45.431Z",
+          "expires_at": "2025-04-11T20:11:45.431Z",
+          "roles": ["string"],
+          "invitation_url": "<<initiate_login_url>>?invitation=<invite ID>&organization=org_123234",
+          "ticket_id": "1asdfasd23usjdef"
+        }
+      },
+      "GetOrganizationMemberRolesResponseExample": {
+        "value": {
+          "roles": [
+            {
+              "id": "rol_SO2j0sFo9NFa3F9w",
+              "name": "role1",
+              "description": "role1 description"
+            },
+            {
+              "id": "rol_BO2j1sFo9NFa3F9w",
+              "name": "role2",
+              "description": "role2 description"
+            }
+          ]
+        }
+      },
+      "AssignOrganizationMemberRoleRequestExample": {
+        "value": {
+          "role_id": "rol_SO2j0sFo9NFa3F9w"
+        }
+      },
+      "AssignOrganizationMemberRoleResponseExample": {
+        "value": {
+          "roles": [
+            {
+              "id": "rol_SO2j0sFo9NFa3F9w",
+              "name": "role1",
+              "description": "role1 description"
+            },
+            {
+              "id": "rol_BO2j1sFo9NFa3F9w",
+              "name": "role2",
+              "description": "role2 description"
+            }
+          ]
+        }
+      },
+      "DetachIdpProviderResponseExample": {
+        "value": {}
+      },
+      "CreateIdpDomainRequestExample": {
+        "value": {
+          "domain": "my-domain.com"
+        }
+      },
+      "CreateIdpDomainResponseExample": {
+        "value": {
+          "domains": ["acme.com", "my-domain.com"]
+        }
+      },
+      "GetConfigurationResponseExample": {
+        "value": {
+          "connection_profile": {},
+          "user_attribute_profile": {},
+          "linked_clients": [
+            {
+              "enable": true,
+              "org_admin_can_change": true
+            }
+          ]
+        }
+      },
+      "ErrorIdpNotFoundExample": {
+        "value": {
+          "type": "https://auth0.com/api-errors#A0E-404-0002",
+          "status": 404,
+          "title": "Resource Not Found",
+          "detail": "The IdP does not exist."
+        }
+      },
+      "ErrorInsufficientScopeExample": {
+        "value": {
+          "type": "https://auth0.com/api-errors#A0E-403-0002",
+          "status": 403,
+          "title": "Insufficient Scope",
+          "detail": "The auth token lacks the required scope: Check the API documentation for the required scopes for this endpoint."
+        }
+      },
+      "ErrorInvalidJsonExample": {
+        "value": {
+          "type": "https://auth0.com/api-errors#A0E-400-0002",
+          "status": 400,
+          "title": "Invalid JSON",
+          "detail": "The request body is invalid JSON."
+        }
+      },
+      "ErrorMissingTokenExample": {
+        "value": {
+          "type": "https://auth0.com/api-errors#A0E-401-0002",
+          "status": 401,
+          "title": "Missing Token",
+          "detail": "No auth token provided."
+        }
+      },
+      "ErrorOrgNotFoundExample": {
+        "value": {
+          "type": "https://auth0.com/api-errors#A0E-404-0002",
+          "status": 404,
+          "title": "Resource Not Found",
+          "detail": "The organization does not exist."
+        }
+      },
+      "ErrorEndpointRateLimitExample": {
+        "value": {
+          "type": "https://auth0.com/api-errors#A0E-429-0003",
+          "status": 429,
+          "title": "Endpoint Rate Limit Exceeded",
+          "detail": "The endpoint request limit has been exceeded."
+        }
+      }
+    },
+    "headers": {
+      "X-RateLimit-Limit": {
+        "description": "The number of allowed requests in the current rate limit window.",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "X-RateLimit-Remaining": {
+        "description": "The number of remaining requests in the current rate limit window.",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "X-RateLimit-Reset": {
+        "description": "The Unix timestamp indicating when the current rate limit window resets.",
+        "schema": {
+          "type": "integer"
+        }
+      }
+    },
+    "parameters": {
+      "IdpIdPathParameter": {
+        "in": "path",
+        "name": "idp_id",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/IdpId"
+        }
+      },
+      "OrgDomainIdPathParameter": {
+        "in": "path",
+        "name": "domain_id",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/OrgDomainId"
+        }
+      },
+      "InvitationIdPathParameter": {
+        "in": "path",
+        "name": "invitation_id",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/InvitationId"
+        }
+      },
+      "OrgDomainNamePathParameter": {
+        "in": "path",
+        "name": "domain_name",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/OrgDomainName"
+        }
+      },
+      "OrgUserIdPathParameter": {
+        "in": "path",
+        "name": "user_id",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/OrgMemberId"
+        }
+      },
+      "OrgMemberRoleIdPathParameter": {
+        "in": "path",
+        "name": "role_id",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/OrgMemberRoleId"
+        }
+      },
+      "OrgDeleteUserQueryParameter": {
+        "in": "query",
+        "name": "delete_user",
+        "required": true,
+        "description": "True if the underlying user should also be deleted, false if only the membership should be removed.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "LuceneQueryParameter": {
+        "in": "query",
+        "name": "q",
+        "required": false,
+        "description": "Query in Lucene query string syntax.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "FieldsQueryParameter": {
+        "in": "query",
+        "name": "fields",
+        "required": false,
+        "description": "Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "IncludeFieldsQueryParameter": {
+        "in": "query",
+        "name": "include_fields",
+        "required": false,
+        "description": "Whether specified fields are to be included (true) or excluded (false).",
+        "schema": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "PaginationFromQueryParameter": {
+        "in": "query",
+        "name": "from",
+        "required": false,
+        "description": "Optional Id from which to start selection.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "PaginationTakeQueryParameter": {
+        "in": "query",
+        "name": "take",
+        "required": false,
+        "description": "Number of results per page. Defaults to 50.",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "LocaleQueryParameter": {
+        "in": "query",
+        "name": "locale",
+        "required": false,
+        "description": "The locale for getting the correct custom_texts",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "requestBodies": {
+      "CreateIdentityProviderRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateIdentityProviderRequestContent"
+            },
+            "examples": {
+              "createIdpRequest": {
+                "$ref": "#/components/examples/CreateIdentityProviderRequestExample"
+              }
+            }
+          }
+        }
+      },
+      "UpdateIdentityProviderRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UpdateIdentityProviderRequestContent"
+            },
+            "examples": {
+              "updateIdpRequest": {
+                "$ref": "#/components/examples/UpdateIdentityProviderRequestExample"
+              }
+            }
+          }
+        }
+      },
+      "UpdateOrganizationDetailsRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UpdateOrganizationDetailsRequestContent"
+            },
+            "examples": {
+              "updateOrgDetailsRequestExample": {
+                "$ref": "#/components/examples/UpdateOrganizationDetailsRequestExample"
+              }
+            }
+          }
+        }
+      },
+      "CreateOrganizationDomainRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateOrganizationDomainRequestContent"
+            },
+            "examples": {
+              "createOrgDomainRequest": {
+                "$ref": "#/components/examples/CreateOrganizationDomainRequestExample"
+              }
+            }
+          }
+        }
+      },
+      "CreateIdpProvisioningScimTokenRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateIdpProvisioningScimTokenRequestContent"
+            },
+            "examples": {
+              "createIdpProvisioningScimTokenRequestExample": {
+                "$ref": "#/components/examples/CreateIdpProvisioningScimTokenRequestExample"
+              }
+            }
+          }
+        }
+      },
+      "CreateMemberInvitationRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateMemberInvitationRequestContent"
+            },
+            "examples": {
+              "createMemberInvitationRequestExample": {
+                "$ref": "#/components/examples/CreateMemberInvitationRequestExample"
+              }
+            }
+          }
+        }
+      },
+      "CreateIdpDomainRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateIdpDomainRequestContent"
+            },
+            "examples": {
+              "updateOrgDetailsRequestExample": {
+                "$ref": "#/components/examples/CreateIdpDomainRequestExample"
+              }
+            }
+          }
+        }
+      },
+      "AssignOrganizationMemberRoleRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AssignOrganizationMemberRoleRequestContent"
+            },
+            "examples": {
+              "updateOrgDetailsRequestExample": {
+                "$ref": "#/components/examples/AssignOrganizationMemberRoleRequestExample"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "CreateIdentityProviderResponse": {
+        "description": "Identity provider successfully created.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateIdentityProviderResponseContent"
+            },
+            "examples": {
+              "createIdPResponseExample": {
+                "$ref": "#/components/examples/CreateIdentityProviderResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "GetIdentityProviderResponse": {
+        "description": "Identity provider successfully retrieved.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GetIdentityProviderResponseContent"
+            },
+            "examples": {
+              "getIdPResponseExample": {
+                "$ref": "#/components/examples/GetIdentityProviderResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "ListIdentityProvidersResponse": {
+        "description": "List of identity providers successfully retrieved.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListIdentityProvidersResponseContent"
+            },
+            "examples": {
+              "listIdPsResponseExample": {
+                "$ref": "#/components/examples/ListIdentityProviderResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "UpdateIdentityProviderResponse": {
+        "description": "Identity provider successfully updated.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UpdateIdentityProviderResponseContent"
+            },
+            "examples": {
+              "updateIdPResponseExample": {
+                "$ref": "#/components/examples/UpdateIdentityProviderResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "DeleteIdentityProviderResponse": {
+        "description": "The identity provider was successfully removed from the organization.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        }
+      },
+      "CreateIdPProvisioningConfigResponse": {
+        "description": "Provisioning configuration successfully created.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateIdPProvisioningConfigResponseContent"
+            },
+            "examples": {
+              "createIdPProvisioningResponseExample": {
+                "$ref": "#/components/examples/CreateIdpProvisioningConfigResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "GetIdPProvisioningConfigResponse": {
+        "description": "Provisioning config successfully retrieved.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GetIdPProvisioningConfigResponseContent"
+            },
+            "examples": {
+              "getIdPResponseExample": {
+                "$ref": "#/components/examples/GetIdPProvisioningConfigResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "DeleteIdpProvisioningConfigResponse": {
+        "description": "The Provisioning config was successfully removed from the identity provider.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        }
+      },
+      "CreateOrganizationDomainResponse": {
+        "description": "Domain successfully created for organization.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateOrganizationDomainResponseContent"
+            },
+            "examples": {
+              "createOrgDomainResponseExample": {
+                "$ref": "#/components/examples/CreateOrganizationDomainResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "GetOrganizationDomainResponse": {
+        "description": "Organization domain successfully retrieved.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GetOrganizationDomainResponseContent"
+            },
+            "examples": {
+              "getOrgDomainResponseExample": {
+                "$ref": "#/components/examples/GetOrganizationDomainResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "ListOrganizationDomainsResponse": {
+        "description": "List domains for an organization.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListOrganizationDomainsResponseContent"
+            },
+            "examples": {
+              "listOrgDomainsResponseExample": {
+                "$ref": "#/components/examples/ListOrganizationDomainsResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "StartOrganizationDomainVerificationResponse": {
+        "description": "Organization domain verification successfully started.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/StartOrganizationDomainVerificationResponseContent"
+            },
+            "examples": {
+              "updateOrgDomainResponseExample": {
+                "$ref": "#/components/examples/StartOrganizationDomainVerificationResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "ListDomainIdentityProvidersResponse": {
+        "description": "List identity providers for an organization domain.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListDomainIdentityProvidersResponseContent"
+            },
+            "examples": {
+              "getOrgDomainIdentityProvidersResponseExample": {
+                "$ref": "#/components/examples/ListDomainIdentityProvidersResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "DeleteOrganizationDomainResponse": {
+        "description": "The domain was successfully removed from the organization.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        }
+      },
+      "GetOrganizationDetailsResponse": {
+        "description": "Organization details successfully retrieved.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GetOrganizationDetailsResponseContent"
+            },
+            "examples": {
+              "getOrgDetailsResponseExample": {
+                "$ref": "#/components/examples/GetOrganizationDetailsResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "UpdateOrganizationDetailsResponse": {
+        "description": "Organization details successfully retrieved.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UpdateOrganizationDetailsResponseContent"
+            },
+            "examples": {
+              "updateOrgDetailsResponseExample": {
+                "$ref": "#/components/examples/UpdateOrganizationDetailsResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "CreateIdpProvisioningScimTokenResponse": {
+        "description": "Provisioning SCIM token successfully created.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateIdpProvisioningScimTokenResponseContent"
+            },
+            "examples": {
+              "createIdPProvisioningScimTokenResponseExample": {
+                "$ref": "#/components/examples/CreateIdpProvisioningScimTokenResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "ListIdpProvisioningScimTokensResponse": {
+        "description": "List Provisioning SCIM tokens for an identity provider.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListIdpProvisioningScimTokensResponseContent"
+            },
+            "examples": {
+              "listOrgDomainsResponseExample": {
+                "$ref": "#/components/examples/ListIdpProvisioningScimTokensResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "DeleteIdpProvisioningScimTokenResponse": {
+        "description": "The Provisioning SCIM token was successfully deleted.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        }
+      },
+      "ListOrganizationMembersResponse": {
+        "description": "List members for an organization.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListOrganizationMembersResponseContent"
+            },
+            "examples": {
+              "listOrgDomainsResponseExample": {
+                "$ref": "#/components/examples/ListOrganizationMembersResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "GetOrganizationMemberResponse": {
+        "description": "Retrieve a member of the organization.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GetOrganizationMemberResponseContent"
+            },
+            "examples": {
+              "listOrgDomainsResponseExample": {
+                "$ref": "#/components/examples/GetOrganizationMemberResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "DeleteOrganizationMemberResponse": {
+        "description": "The user's membership was successfully deleted.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        }
+      },
+      "ListMembersInvitationsResponse": {
+        "description": "List Members Invitations for an Organization.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListMembersInvitationsResponseContent"
+            },
+            "examples": {
+              "listMembersInvitationsResponseExample": {
+                "$ref": "#/components/examples/ListMembersInvitationsResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "CreateMemberInvitationResponse": {
+        "description": "Create Member Invitation for an Organization.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateMemberInvitationResponseContent"
+            },
+            "examples": {
+              "listMembersInvitationsResponseExample": {
+                "$ref": "#/components/examples/CreateMemberInvitationResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "GetMemberInvitationResponse": {
+        "description": "Get Member Invitation for an Organization by Id.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GetMemberInvitationResponseContent"
+            },
+            "examples": {
+              "GetMemberInvitationResponseExample": {
+                "$ref": "#/components/examples/GetMemberInvitationResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "DeleteMemberInvitationResponse": {
+        "description": "The SCIM token was successfully deleted.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        }
+      },
+      "DetachIdpProviderResponse": {
+        "description": "The identity provider was successfully detached from the organization.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DetachIdpProviderResponseContent"
+            },
+            "examples": {
+              "createIdPResponseExample": {
+                "$ref": "#/components/examples/DetachIdpProviderResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "CreateIdpDomainResponse": {
+        "description": "Domain successfully associated with identity provider.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreateIdpDomainResponseContent"
+            },
+            "examples": {
+              "createIdPResponseExample": {
+                "$ref": "#/components/examples/CreateIdpDomainResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "DeleteIdpDomainResponse": {
+        "description": "The domain was successfully removed from the identity provider.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        }
+      },
+      "GetConfigurationResponse": {
+        "description": "Configuration successfully retrieved.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GetConfigurationResponseContent"
+            },
+            "examples": {
+              "getOrgDetailsResponseExample": {
+                "$ref": "#/components/examples/GetConfigurationResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "ListOrganizationMemberRolesResponse": {
+        "description": "Retrieved memeber roles successfully.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GetOrganizationMemberRolesResponseContent"
+            },
+            "examples": {
+              "listMembersInvitationsResponseExample": {
+                "$ref": "#/components/examples/GetOrganizationMemberRolesResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "AssignOrganizationMemberRoleResponse": {
+        "description": "Assign role to member successfully.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AssignOrganizationMemberRoleResponseContent"
+            },
+            "examples": {
+              "listMembersInvitationsResponseExample": {
+                "$ref": "#/components/examples/AssignOrganizationMemberRoleResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "DeleteOrganizationMemberRoleResponse": {
+        "description": "The role was successfully removed from the member.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        }
+      },
+      "ClientErrorInvalidJsonResponse": {
+        "description": "Invalid request body. The message will vary depending on the cause.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseContent"
+            },
+            "examples": {
+              "errorInvalidJsonExample": {
+                "$ref": "#/components/examples/ErrorInvalidJsonExample"
+              }
+            }
+          }
+        }
+      },
+      "ClientErrorInsufficientScopeResponse": {
+        "description": "Insufficient scope.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseContent"
+            },
+            "examples": {
+              "errorInsufficientScopeExample": {
+                "$ref": "#/components/examples/ErrorInsufficientScopeExample"
+              }
+            }
+          }
+        }
+      },
+      "ClientErrorNotFoundOrganizationResponse": {
+        "description": "Organization not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseContent"
+            },
+            "examples": {
+              "errorOrgNotFoundExample": {
+                "$ref": "#/components/examples/ErrorOrgNotFoundExample"
+              }
+            }
+          }
+        }
+      },
+      "ClientErrorNotFoundOrgOrIdpResponse": {
+        "description": "Resource not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseContent"
+            },
+            "examples": {
+              "errorOrgNotFoundExample": {
+                "$ref": "#/components/examples/ErrorOrgNotFoundExample"
+              },
+              "ErrorIdpNotFoundExample": {
+                "$ref": "#/components/examples/ErrorIdpNotFoundExample"
+              }
+            }
+          }
+        }
+      },
+      "ClientErrorTooManyRequestsResponse": {
+        "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers.",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "$ref": "#/components/headers/X-RateLimit-Limit"
+          },
+          "X-RateLimit-Remaining": {
+            "$ref": "#/components/headers/X-RateLimit-Remaining"
+          },
+          "X-RateLimit-Reset": {
+            "$ref": "#/components/headers/X-RateLimit-Reset"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseContent"
+            },
+            "examples": {
+              "errorEndpointRateLimitExample": {
+                "$ref": "#/components/examples/ErrorEndpointRateLimitExample"
+              }
+            }
+          }
+        }
+      },
+      "ClientErrorUnauthorizedResponse": {
+        "description": "Unauthorized: token missing, invalid or expired.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseContent"
+            },
+            "examples": {
+              "errorMissingTokenExample": {
+                "$ref": "#/components/examples/ErrorMissingTokenExample"
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "GetOrganizationDetailsResponseContent": {
+        "$ref": "#/components/schemas/OrgDetails"
+      },
+      "UpdateOrganizationDetailsRequestContent": {
+        "$ref": "#/components/schemas/OrgDetails"
+      },
+      "UpdateOrganizationDetailsResponseContent": {
+        "$ref": "#/components/schemas/OrgDetails"
+      },
+      "CreateIdentityProviderRequestContent": {
+        "$ref": "#/components/schemas/IdpKnown"
+      },
+      "CreateIdentityProviderResponseContent": {
+        "$ref": "#/components/schemas/IdpKnown"
+      },
+      "GetIdentityProviderResponseContent": {
+        "$ref": "#/components/schemas/IdpKnown"
+      },
+      "ListIdentityProvidersResponseContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "identity_providers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdpKnown"
+            }
+          }
+        }
+      },
+      "UpdateIdentityProviderRequestContent": {
+        "$ref": "#/components/schemas/IdpUpdateKnown"
+      },
+      "UpdateIdentityProviderResponseContent": {
+        "$ref": "#/components/schemas/IdpKnown"
+      },
+      "CreateOrganizationDomainRequestContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "domain": {
+            "$ref": "#/components/schemas/OrgDomainName"
+          }
+        },
+        "required": ["domain"]
+      },
+      "CreateOrganizationDomainResponseContent": {
+        "$ref": "#/components/schemas/OrgDomain"
+      },
+      "GetOrganizationDomainResponseContent": {
+        "$ref": "#/components/schemas/OrgDomain"
+      },
+      "ListOrganizationDomainsResponseContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "organization_domains": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrgDomain"
+            }
+          }
+        }
+      },
+      "ListDomainIdentityProvidersResponseContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "identity_providers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DomainIdp"
+            }
+          }
+        }
+      },
+      "StartOrganizationDomainVerificationResponseContent": {
+        "$ref": "#/components/schemas/OrgDomain"
+      },
+      "CreateIdPProvisioningConfigResponseContent": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpProvisioningConfig"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_on": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        ],
+        "required": ["created_at", "updated_on"],
+        "unevaluatedProperties": false
+      },
+      "GetIdPProvisioningConfigResponseContent": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpProvisioningConfig"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_on": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        ],
+        "required": ["created_at", "updated_on"],
+        "unevaluatedProperties": false
+      },
+      "CreateIdpProvisioningScimTokenRequestContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "token_lifetime": {
+            "type": "integer",
+            "description": "Lifetime of the token in seconds. Do not set for non-expiring tokens.",
+            "exclusiveMinimum": 900
+          }
+        }
+      },
+      "CreateIdpProvisioningScimTokenResponseContent": {
+        "$ref": "#/components/schemas/IdpScimToken"
+      },
+      "ListIdpProvisioningScimTokensResponseContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scim_tokens": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdpScimToken"
+            }
+          }
+        }
+      },
+      "ListOrganizationMembersResponseContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrgMember"
+            }
+          }
+        }
+      },
+      "GetOrganizationMemberResponseContent": {
+        "$ref": "#/components/schemas/OrgMember"
+      },
+      "ListMembersInvitationsResponseContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "invitations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberInvitation"
+            }
+          }
+        }
+      },
+      "GetMemberInvitationResponseContent": {
+        "$ref": "#/components/schemas/MemberInvitation"
+      },
+      "CreateMemberInvitationRequestContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "invitee": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "The email of the person receeiving the invite."
+              }
+            }
+          },
+          "client_id": {
+            "type": "string",
+            "description": "The Organizations client Identifer."
+          },
+          "connection_id": {
+            "type": "string",
+            "description": "Identity provider identifier.",
+            "pattern": "^con_[A-Za-z0-9]{16}$"
+          },
+          "ttl_sec": {
+            "type": "integer",
+            "description": "How long (in seconds) the invitation should be valid."
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Member Invitations Roles."
+            }
+          },
+          "send_invitation_email": {
+            "type": "boolean",
+            "description": "Should an invitation email be sent on member invite."
+          }
+        },
+        "required": [
+          "invitee",
+          "client_id",
+          "connection_id",
+          "ttl_sec",
+          "roles",
+          "send_invitation_email"
+        ]
+      },
+      "CreateMemberInvitationResponseContent": {
+        "$ref": "#/components/schemas/MemberInvitation"
+      },
+      "CreateIdpDomainRequestContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "domain": {
+            "$ref": "#/components/schemas/OrgDomainName"
+          }
+        },
+        "required": ["domain"]
+      },
+      "DetachIdpProviderResponseContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "CreateIdpDomainResponseContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "domains": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrgDomainName"
+            }
+          }
+        }
+      },
+      "GetConfigurationResponseContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "connection_profile": {
+            "$ref": "#/components/schemas/ConnectionProfile"
+          },
+          "user_attribute_profile": {
+            "$ref": "#/components/schemas/UserAttributeProfile"
+          },
+          "linked_clients": {
+            "$ref": "#/components/schemas/LinkedClientsConfig"
+          }
+        }
+      },
+      "GetOrganizationMemberRolesResponseContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrgMemberRole"
+            }
+          }
+        }
+      },
+      "AssignOrganizationMemberRoleRequestContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "role_id": {
+            "$ref": "#/components/schemas/OrgMemberRoleId"
+          }
+        }
+      },
+      "AssignOrganizationMemberRoleResponseContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrgMemberRole"
+            }
+          }
+        }
+      },
+      "ErrorResponseContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "status", "title", "detail"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "A URI that describes the error.",
+            "format": "uri"
+          },
+          "status": {
+            "type": "integer",
+            "description": "The HTTP status code result of the request."
+          },
+          "title": {
+            "type": "string",
+            "description": "A brief description of the error."
+          },
+          "detail": {
+            "type": "string",
+            "description": "A detailed description of the error."
+          }
+        }
+      },
+      "OrganizationAccessLevelEnum": {
+        "type": "string",
+        "description": "",
+        "enum": ["none", "readonly", "limited", "full"]
+      },
+      "IdpStrategyEnum": {
+        "type": "string",
+        "description": "The type of the identity provider",
+        "enum": [
+          "adfs",
+          "google-apps",
+          "oidc",
+          "okta",
+          "pingfederate",
+          "samlp",
+          "waad"
+        ]
+      },
+      "IdpProvisioningMethodEnum": {
+        "type": "string",
+        "description": "The type of an identity provider's provisioning method",
+        "enum": ["google-sync", "none", "scim"]
+      },
+      "IdpOidcOptionsTypeEnum": {
+        "type": "string",
+        "description": "Select whether authentication exchanges occur via server-to-server communication (Back Channel) or through the browser using Implicit Flow with Form Post (Front Channel)",
+        "enum": ["front_channel", "back_channel"]
+      },
+      "IdpId": {
+        "type": "string",
+        "description": "Identity provider identifier.",
+        "readOnly": true,
+        "pattern": "^con_[A-Za-z0-9]{16}$"
+      },
+      "IdpBase": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/IdpId"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the identity provider",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "strategy": {
+                "$ref": "#/components/schemas/IdpStrategyEnum"
+              },
+              "domains": {
+                "type": "array",
+                "description": "List of domains for Home Realm Discovery (HRD)",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "display_name": {
+                "type": "string",
+                "description": "Identity provider name used on the login screen.",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "show_as_button": {
+                "type": "boolean",
+                "description": "Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by Home Realm Discovery (HRD)."
+              },
+              "assign_membership_on_login": {
+                "type": "boolean",
+                "description": "If true, the user will be made a member of the organization upon login."
+              },
+              "is_enabled": {
+                "type": "boolean",
+                "description": "True if the identity provider is enabled for the organization."
+              },
+              "access_level": {
+                "$ref": "#/components/schemas/OrganizationAccessLevelEnum",
+                "readOnly": true
+              }
+            },
+            "required": ["name", "strategy"]
+          }
+        ]
+      },
+      "DomainIdp": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/IdpId"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the identity provider",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "display_name": {
+                "type": "string",
+                "description": "Identity provider name used on the login screen.",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "required": ["id", "name", "display_name"]
+          }
+        ]
+      },
+      "IdpUpdateBase": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/IdpId"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the identity provider",
+                "minLength": 1,
+                "maxLength": 128,
+                "readOnly": true
+              },
+              "display_name": {
+                "type": "string",
+                "description": "Identity provider name used on the login screen. Requires access_level to be 'full'",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "show_as_button": {
+                "type": "boolean",
+                "description": "Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by Home Realm Discovery (HRD). Requires access_level to be 'full' or 'limited'"
+              },
+              "assign_membership_on_login": {
+                "type": "boolean",
+                "description": "If true, the user will be made a member of the organization upon login. Requires access_level to be 'full' or 'limited'."
+              },
+              "is_enabled": {
+                "type": "boolean",
+                "description": "True if the identity provider is enabled for the organization. Requires access_level to be 'full' or 'limited'"
+              },
+              "access_level": {
+                "$ref": "#/components/schemas/OrganizationAccessLevelEnum",
+                "readOnly": true
+              }
+            }
+          }
+        ]
+      },
+      "IdpKnown": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IdpAdfs"
+          },
+          {
+            "$ref": "#/components/schemas/IdpGoogleApps"
+          },
+          {
+            "$ref": "#/components/schemas/IdpOidc"
+          },
+          {
+            "$ref": "#/components/schemas/IdpOkta"
+          },
+          {
+            "$ref": "#/components/schemas/IdpPingFederate"
+          },
+          {
+            "$ref": "#/components/schemas/IdpSamlp"
+          },
+          {
+            "$ref": "#/components/schemas/IdpWaad"
+          }
+        ]
+      },
+      "IdpUpdateKnown": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IdpAdfsUpdate"
+          },
+          {
+            "$ref": "#/components/schemas/IdpGoogleAppsUpdate"
+          },
+          {
+            "$ref": "#/components/schemas/IdpOidcUpdate"
+          },
+          {
+            "$ref": "#/components/schemas/IdpOktaUpdate"
+          },
+          {
+            "$ref": "#/components/schemas/IdpPingFederateUpdate"
+          },
+          {
+            "$ref": "#/components/schemas/IdpSamlpUpdate"
+          },
+          {
+            "$ref": "#/components/schemas/IdpWaadUpdate"
+          }
+        ]
+      },
+      "IdpAdfs": {
+        "title": "IdP ADFS",
+        "description": "Identity provider specific options.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "adfs"
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpAdfsOptions",
+                "description": "Identity provider specific options."
+              }
+            },
+            "required": ["strategy", "options"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpGoogleApps": {
+        "title": "IdP Google Workforce",
+        "description": "Identity provider specific options.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "google-apps"
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpGoogleAppsOptions",
+                "description": "Identity provider specific options."
+              }
+            },
+            "required": ["strategy", "options"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpOidc": {
+        "title": "IdP OIDC",
+        "description": "Identity provider specific options.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "oidc"
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpOidcOptions",
+                "description": "Identity provider specific options."
+              }
+            },
+            "required": ["strategy", "options"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpOkta": {
+        "title": "IdP Okta",
+        "description": "Identity provider specific options.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "okta"
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpOktaOptions",
+                "description": "Identity provider specific options."
+              }
+            },
+            "required": ["strategy", "options"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpPingFederate": {
+        "title": "IdP Ping",
+        "description": "Identity provider specific options.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "pingfederate"
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpPingFederateOptions",
+                "description": "Identity provider specific options."
+              }
+            },
+            "required": ["strategy", "options"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpSamlp": {
+        "title": "IdP SAML",
+        "description": "Identity provider specific options.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "samlp"
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpSamlpOptions",
+                "description": "Identity provider specific options."
+              }
+            },
+            "required": ["strategy", "options"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpWaad": {
+        "title": "IdP Microsoft Azure AD",
+        "description": "Identity provider specific options.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "waad"
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpWaadOptions",
+                "description": "Identity provider specific options."
+              }
+            },
+            "required": ["strategy", "options"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpAdfsUpdate": {
+        "title": "IdP ADFS",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpUpdateBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "adfs",
+                "description": "The strategy of the identity provider being updated.  Note: the strategy cannot be changed."
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpAdfsOptions",
+                "description": "Identity provider specific options.  Requires access_level to be 'full'."
+              }
+            },
+            "required": ["strategy"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpGoogleAppsUpdate": {
+        "title": "IdP Google Workforce",
+        "description": "Identity provider specific options.  Requires access_level to be 'full'.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpUpdateBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "google-apps",
+                "description": "The strategy of the identity provider being updated.  Note: the strategy cannot be changed."
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpGoogleAppsOptions",
+                "description": "Identity provider specific options.  Requires access_level to be 'full'."
+              }
+            },
+            "required": ["strategy"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpOidcUpdate": {
+        "title": "IdP OIDC",
+        "description": "Identity provider specific options.  Requires access_level to be 'full'.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpUpdateBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "oidc",
+                "description": "The strategy of the identity provider being updated.  Note: the strategy cannot be changed."
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpOidcOptions",
+                "description": "Identity provider specific options.  Requires access_level to be 'full'."
+              }
+            },
+            "required": ["strategy"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpOktaUpdate": {
+        "title": "IdP Okta",
+        "description": "Identity provider specific options.  Requires access_level to be 'full'.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpUpdateBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "okta",
+                "description": "The strategy of the identity provider being updated.  Note: the strategy cannot be changed."
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpOktaOptions",
+                "description": "Identity provider specific options.  Requires access_level to be 'full'."
+              }
+            },
+            "required": ["strategy"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpPingFederateUpdate": {
+        "title": "IdP Ping",
+        "description": "Identity provider specific options.  Requires access_level to be 'full'.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpUpdateBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "pingfederate",
+                "description": "The strategy of the identity provider being updated.  Note: the strategy cannot be changed."
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpPingFederateOptions",
+                "description": "Identity provider specific options.  Requires access_level to be 'full'."
+              }
+            },
+            "required": ["strategy"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpSamlpUpdate": {
+        "title": "IdP SAML",
+        "description": "Identity provider specific options.  Requires access_level to be 'full'.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpUpdateBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "samlp",
+                "description": "The strategy of the identity provider being updated.  Note: the strategy cannot be changed."
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpSamlpOptions",
+                "description": "Identity provider specific options.  Requires access_level to be 'full'."
+              }
+            },
+            "required": ["strategy"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpWaadUpdate": {
+        "title": "IdP Microsoft Azure AD",
+        "description": "Identity provider specific options.  Requires access_level to be 'full'.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/IdpUpdateBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "const": "waad",
+                "description": "The strategy of the identity provider being updated.  Note: the strategy cannot be changed."
+              },
+              "options": {
+                "$ref": "#/components/schemas/IdpWaadOptions",
+                "description": "Identity provider specific options.  Requires access_level to be 'full'."
+              }
+            },
+            "required": ["strategy"]
+          }
+        ],
+        "type": "object",
+        "unevaluatedProperties": false
+      },
+      "IdpAdfsOptions": {
+        "type": "object",
+        "properties": {
+          "adfs_server": {
+            "type": "string",
+            "description": "The adfs_server is the public-facing URL that relying parties and internal clients use to communicate with an ADFS server for authentication and token issuance"
+          },
+          "fedMetadataXml": {
+            "type": "string",
+            "description": "A Federation Metadata XML file in ADFS is a crucial document that serves as a blueprint for establishing trust between an ADFS server and other relying parties that want to consume identity information from ADFS."
+          }
+        },
+        "additionalProperties": false
+      },
+      "IdpGoogleAppsOptions": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Google Workspace domain name for your organization."
+          },
+          "client_id": {
+            "type": "string",
+            "description": "Unique identifier for your registered Google application."
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "String used to gain access to your registered Google application"
+          },
+          "icon_url": {
+            "type": "string",
+            "description": "A URL pointing to an image file that represents your client application."
+          }
+        },
+        "additionalProperties": false
+      },
+      "IdpOidcOptions": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/IdpOidcOptionsTypeEnum"
+          },
+          "client_id": {
+            "type": "string",
+            "description": "The identifier given to you by your provider. Unique identifier for your registered application."
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "Available if Back Channel is chosen earlier. The secret given to you by your provider and each provider manages this step differently."
+          },
+          "discovery_url": {
+            "type": "string",
+            "description": "The URL where the OIDC Identity Provider publishes its OpenID Provider Configuration Information"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IdpOktaOptions": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Okta's domain name for your organization."
+          },
+          "client_id": {
+            "type": "string",
+            "description": "Unique identifier for your registered Okta application"
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "String used to gain access to your registered Okta application. "
+          },
+          "icon_url": {
+            "type": "string",
+            "description": "A URL pointing to an image file that represents your client application."
+          }
+        },
+        "additionalProperties": false
+      },
+      "IdpPingFederateOptions": {
+        "type": "object",
+        "properties": {
+          "signatureAlgorithm": {
+            "type": "string",
+            "description": "Algorithm Auth0 will use to sign the SAML assertions. Ensure this matches your PingFederate Server's configuration."
+          },
+          "digestAlgorithm": {
+            "type": "string",
+            "description": "Algorithm Auth0 will use for the sign request digest. Ensure this matches your PingFederate Server's configuration."
+          },
+          "signSAMLRequest": {
+            "type": "boolean",
+            "description": "Indicates whether PingFederate should digitally sign outgoing SAML authentication requests to relying parties"
+          },
+          "metadataUrl": {
+            "type": "string",
+            "description": "URL provided by PingFederate which returns information used for creating the connection"
+          },
+          "cert": {
+            "type": "string",
+            "description": "A value derived from decoding the signingCert. This should not be updated directly, instead update the signingCertificate to decode a new value for this field"
+          },
+          "signingCert": {
+            "type": "string",
+            "description": "PingFederate Server public key (encoded in PEM or CER) you retrieved from the IdP"
+          },
+          "idpInitiated": {
+            "$ref": "#/components/schemas/IdpOptionsIdpInitiated"
+          },
+          "icon_url": {
+            "type": "string",
+            "description": "A URL pointing to an image file that represents your client application."
+          }
+        },
+        "additionalProperties": false
+      },
+      "IdpSamlpOptions": {
+        "type": "object",
+        "properties": {
+          "signatureAlgorithm": {
+            "type": "string",
+            "description": "Algorithm Auth0 will use to sign the SAML assertions."
+          },
+          "digestAlgorithm": {
+            "type": "string",
+            "description": "Algorithm Auth0 will use to sign the request digest"
+          },
+          "protocolBinding": {
+            "type": "string",
+            "description": "HTTP binding supported by the IdP."
+          },
+          "signSAMLRequest": {
+            "type": "boolean",
+            "description": "When enabled, the SAML authentication request will be signed."
+          },
+          "bindingMethod": {
+            "type": "string",
+            "description": "Defines the specific HTTP binding used for sending SAML messages."
+          },
+          "metadataUrl": {
+            "type": "string",
+            "description": "URL provided by SAML provider which returns information used for creating the connection"
+          },
+          "cert": {
+            "type": "string",
+            "description": "Signing certificate (encoded in PEM or CER) you retrieved from the IdP"
+          },
+          "idpInitiated": {
+            "$ref": "#/components/schemas/IdpOptionsIdpInitiated"
+          },
+          "icon_url": {
+            "type": "string",
+            "description": "A URL pointing to an image file that represents your client application."
+          }
+        },
+        "additionalProperties": false
+      },
+      "IdpOptionsIdpInitiated": {
+        "type": "object",
+        "description": "An object containing configuration details for Identity Provider (IdP) initiated single sign-on flows",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "A flag indicating whether IdP-initiated SSO is enabled for this connection"
+          },
+          "client_id": {
+            "type": "string",
+            "description": "The client ID of your default application for which the IdP-initiated flow is being configured"
+          },
+          "client_protocol": {
+            "type": "string",
+            "description": "This is the protocol used to connect your selected default application"
+          },
+          "client_authorizequery": {
+            "type": "string",
+            "description": "This field represents a template for constructing the authorization query string when initiating an IdP-initiated flow to a specific client"
+          }
+        }
+      },
+      "IdpWaadOptions": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Your Azure AD domain name. You can find this on your Azure AD directory's overview page in the Microsoft Azure portal."
+          },
+          "client_id": {
+            "type": "string",
+            "description": "Unique identifier for your registered Azure AD application."
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "String used to gain access to your registered Azure AD application."
+          },
+          "icon_url": {
+            "type": "string",
+            "description": "A URL pointing to an image file that represents your client application."
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrgId": {
+        "type": "string",
+        "description": "Organization identifier.",
+        "readOnly": true,
+        "pattern": "^org_[A-Za-z0-9]{16}$"
+      },
+      "InvitationId": {
+        "type": "string",
+        "description": "Member Invitation identifier.",
+        "readOnly": true,
+        "pattern": "^oui_[A-Za-z0-9]{16}$"
+      },
+      "OrgDetails": {
+        "type": "object",
+        "additionalProperties": false,
+        "minProperties": 1,
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/OrgId"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of this organization.",
+            "minLength": 1,
+            "maxLength": 50,
+            "readOnly": true
+          },
+          "display_name": {
+            "type": "string",
+            "description": "Friendly name of this organization.",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "branding": {
+            "type": "object",
+            "description": "Theme defines how to style the login pages.",
+            "additionalProperties": false,
+            "properties": {
+              "logo_url": {
+                "type": ["string", "null"],
+                "description": "URL of logo to display on login page.",
+                "format": "uri"
+              },
+              "colors": {
+                "type": "object",
+                "description": "Color scheme used to customize the login pages.",
+                "additionalProperties": false,
+                "required": ["primary", "page_background"],
+                "properties": {
+                  "primary": {
+                    "type": "string",
+                    "description": "HEX Color for primary elements.",
+                    "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+                  },
+                  "page_background": {
+                    "type": "string",
+                    "description": "HEX Color for background.",
+                    "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrgDomainId": {
+        "type": "string",
+        "description": "Organization domain identifier.",
+        "readOnly": true,
+        "pattern": "^ord_[A-Za-z0-9]{16}$"
+      },
+      "OrgDomainStatusEnum": {
+        "type": "string",
+        "description": "Organization domain status.",
+        "enum": ["failed", "pending", "verified"]
+      },
+      "OrgDomainName": {
+        "type": "string",
+        "description": "Domain name.",
+        "pattern": "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9])$"
+      },
+      "OrgDomain": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/OrgDomainId"
+          },
+          "org_id": {
+            "$ref": "#/components/schemas/OrgId"
+          },
+          "domain": {
+            "$ref": "#/components/schemas/OrgDomainName"
+          },
+          "status": {
+            "$ref": "#/components/schemas/OrgDomainStatusEnum"
+          },
+          "verification_text": {
+            "type": "string",
+            "description": "Value used to verify the domain."
+          },
+          "verification_host": {
+            "type": "string",
+            "description": "Stores the full domain where the TXT record should be added."
+          }
+        },
+        "required": [
+          "id",
+          "org_id",
+          "domain",
+          "status",
+          "verification_text",
+          "verification_host"
+        ]
+      },
+      "IdpProvisioningFieldMapItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "provisioning_field": {
+            "type": "string"
+          },
+          "user_attribute": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "provisioning_field",
+          "user_attribute",
+          "description",
+          "label"
+        ]
+      },
+      "IdpProvisioningConfig": {
+        "type": "object",
+        "properties": {
+          "identity_provider_id": {
+            "$ref": "#/components/schemas/IdpId"
+          },
+          "identity_provider_name": {
+            "type": "string",
+            "description": "The name of the identity provider",
+            "minLength": 1,
+            "maxLength": 128,
+            "readOnly": true
+          },
+          "strategy": {
+            "$ref": "#/components/schemas/IdpStrategyEnum"
+          },
+          "method": {
+            "$ref": "#/components/schemas/IdpProvisioningMethodEnum"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdpProvisioningFieldMapItem"
+            }
+          },
+          "user_id_attribute": {
+            "type": "string",
+            "description": "The ID of the user"
+          }
+        },
+        "required": [
+          "identity_provider_id",
+          "identity_provider_name",
+          "strategy",
+          "method",
+          "fields",
+          "user_id_attribute"
+        ]
+      },
+      "IdpScimToken": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "token_id": {
+            "type": "string",
+            "description": "The token identifier."
+          },
+          "token": {
+            "type": "string",
+            "description": "The SCIM client's token."
+          },
+          "created_at": {
+            "type": "string",
+            "description": "The token's created at timestamp.",
+            "format": "date-time"
+          },
+          "valid_until": {
+            "type": "string",
+            "description": "The token's valid until at timestamp (will not exist for non-expiring tokens).",
+            "format": "date-time"
+          }
+        },
+        "required": ["token_id", "token", "created_at"]
+      },
+      "MemberInvitation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/InvitationId"
+          },
+          "organization_id": {
+            "$ref": "#/components/schemas/OrgId"
+          },
+          "inviter": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The inviters name."
+              }
+            }
+          },
+          "invitee": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "The email of the person receiving the invite."
+              }
+            }
+          },
+          "client_id": {
+            "type": "string",
+            "description": "The Organizations client identifier."
+          },
+          "connection_id": {
+            "$ref": "#/components/schemas/IdpId"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "The member invitation's created at timestamp.",
+            "format": "date-time"
+          },
+          "expires_at": {
+            "type": "string",
+            "description": "The member invitation's expiry timestamp.",
+            "format": "date-time"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Member Invitations Roles."
+            }
+          },
+          "invitation_url": {
+            "type": "string",
+            "description": "The invitation URL for the member invitation."
+          },
+          "ticket_id": {
+            "type": "string",
+            "description": "The Ticket Identifier for the Member Invitation."
+          }
+        },
+        "required": [
+          "id",
+          "organization_id",
+          "inviter",
+          "invitee",
+          "client_id",
+          "connection_id",
+          "created_at",
+          "expires_at",
+          "roles",
+          "invitation_url",
+          "ticket_id"
+        ]
+      },
+      "OrgMemberRoleId": {
+        "type": "string",
+        "description": "The ID of a role that can be assigned to a member of an organization.",
+        "pattern": "^rol_[A-Za-z0-9]{16}$"
+      },
+      "OrgMemberRole": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/OrgMemberRoleId"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "name"],
+        "readOnly": true
+      },
+      "OrgMemberId": {
+        "type": "string",
+        "description": "The user ID.",
+        "readOnly": true
+      },
+      "OrgMember": {
+        "type": "object",
+        "unevaluatedProperties": false,
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "user_id": {
+                "$ref": "#/components/schemas/OrgMemberId"
+              },
+              "is_guest": {
+                "type": "boolean",
+                "description": "Is member a guest.",
+                "readOnly": true
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrgMemberRole"
+                },
+                "readOnly": true
+              },
+              "created_at": {
+                "type": "string",
+                "description": "Date and time when this user was created (ISO_8601 format).",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "updated_at": {
+                "type": "string",
+                "description": "Date and time when this user was last updated (ISO_8601 format).",
+                "format": "date-time",
+                "readOnly": true
+              },
+              "last_login": {
+                "type": "string",
+                "description": "Last date and time this user logged in (ISO_8601 format).",
+                "format": "date-time",
+                "readOnly": true
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/UserAttributes"
+          }
+        ]
+      },
+      "UserAttributes": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email"
+          },
+          "name": {
+            "type": "string",
+            "description": "Full Name"
+          },
+          "nickname": {
+            "type": "string",
+            "description": "User nickname"
+          },
+          "given_name": {
+            "type": "string",
+            "description": "First name"
+          },
+          "family_name": {
+            "type": "string",
+            "description": "Last name"
+          }
+        }
+      },
+      "ConnectionProfile": {
+        "type": "object"
+      },
+      "UserAttributeProfile": {
+        "type": "object"
+      },
+      "LinkedClientsConfig": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enable": {
+              "type": "boolean"
+            },
+            "org_admin_can_change": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2ClientCredentials": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/oauth/token",
+            "x-form-parameters": {
+              "audience": "/myorg-api/v1/"
+            },
+            "scopes": {
+              "read:my_org:config": "Read Organization Config",
+              "read:my_org:details": "Read Organization Details",
+              "update:my_org:details": "Update Organization Details",
+              "read:my_org:identity_providers": "Read Identity Providers for an Organization",
+              "create:my_org:identity_providers": "Create Identity Provider for an Organization",
+              "update:my_org:identity_providers": "Update Identity Provider for an Organization",
+              "delete:my_org:identity_providers": "Delete Identity Provider for an Organization",
+              "update:my_org:identity_providers_detach": "Detach Identity Provider from an Organization",
+              "read:my_org:identity_provider_domains": "Read Identity Provider Domain for Organization",
+              "create:my_org:identity_provider_domains": "Add Identity Provider Domain for Organization",
+              "delete:my_org:identity_provider_domains": "Delete Identity Provider Domain for Organization",
+              "create:my_org:domains": "Create Domain for an Organization",
+              "read:my_org:domains": "Read Domains for an Organization",
+              "update:my_org:domains": "Update Domain for an Organization",
+              "delete:my_org:domains": "Delete Domain for an Organization",
+              "read:my_org:identity_providers_domains": "Read Identity Providers for an Organization Domain",
+              "create:my_org:identity_provider_provisioning": "Create Provisioning Config for an Identity Provider",
+              "read:my_org:identity_provider_provisioning": "Read Provisioning Config for an Identity Provider",
+              "delete:my_org:identity_provider_provisioning": "Delete Provisioning Config for an Identity Provider",
+              "create:my_org:scim_tokens": "Create SCIM Token for an Identity Provider",
+              "read:my_org:scim_tokens": "Read SCIM Token for an Identity Provider",
+              "delete:my_org:scim_tokens": "Delete SCIM Token for an Identity Provider",
+              "read:my_org:member_invitations": "Read Member Invitations for an Organization",
+              "create:my_org:member_invitations": "Create a Member Invitation for an Organization",
+              "delete:my_org:member_invitations": "Delete Member Invitations for an Organization",
+              "read:my_org:members": "Read Members for Organization",
+              "delete:my_org:members": "Delete Members for Organization",
+              "read:my_org:member_roles": "Read Roles for Members in Organization",
+              "create:my_org:member_roles": "Create Roles for Members in Organization",
+              "update:my_org:member_roles": "Update Roles for Members in Organization",
+              "delete:my_org:member_roles": "Delete Roles from Members for Organization"
+            }
+          }
+        }
+      },
+      "OAuth2AuthCode": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/authorize",
+            "tokenUrl": "/oauth/token",
+            "x-form-parameters": {
+              "audience": "/myorg-api/v1/"
+            },
+            "scopes": {
+              "read:my_org:config": "Read Organization Config",
+              "read:my_org:details": "Read Organization Details",
+              "update:my_org:details": "Update Organization Details",
+              "read:my_org:identity_providers": "Read Identity Providers for Organization",
+              "create:my_org:identity_providers": "Create Identity Provider for Organization",
+              "update:my_org:identity_providers": "Update Identity Provider for Organization",
+              "delete:my_org:identity_providers": "Delete Identity Provider for Organization",
+              "update:my_org:identity_providers_detach": "Detach Identity Provider from Organization",
+              "read:my_org:identity_provider_domains": "Read Identity Provider Domain for Organization",
+              "create:my_org:identity_provider_domains": "Add Identity Provider Domain for Organization",
+              "delete:my_org:identity_provider_domains": "Delete Identity Provider Domain for Organization",
+              "create:my_org:domains": "Create Domain for Organization",
+              "read:my_org:domains": "Read Domains for Organization",
+              "update:my_org:domains": "Update Domain for Organization",
+              "delete:my_org:domains": "Delete Domain for Organization",
+              "read:my_org:identity_providers_domains": "Read Identity Providers for Organization Domain",
+              "create:my_org:identity_provider_provisioning": "Create Provisioning Config for Identity Provider",
+              "read:my_org:identity_provider_provisioning": "Read SCIM Provisioning for Identity Provider",
+              "delete:my_org:identity_provider_provisioning": "Delete Provisioning Config for Identity Provider",
+              "create:my_org:scim_tokens": "Create SCIM Token for Identity Provider",
+              "read:my_org:scim_tokens": "Read SCIM Token for Identity Provider",
+              "delete:my_org:scim_tokens": "Delete SCIM Token for Identity Provider",
+              "read:my_org:member_invitations": "Read Member Invitations for an Organization",
+              "create:my_org:member_invitations": "Create a Member Invitation for an Organization",
+              "delete:my_org:member_invitations": "Delete Member Invitations for an Organization",
+              "read:my_org:members": "Read Members for Organization",
+              "delete:my_org:members": "Delete Members for Organization",
+              "read:my_org:member_roles": "Read Roles for Members in Organization",
+              "create:my_org:member_roles": "Create Roles for Members in Organization",
+              "update:my_org:member_roles": "Update Roles for Members in Organization",
+              "delete:my_org:member_roles": "Delete Roles from Members for Organization"
+            }
+          }
+        }
+      }
+    }
+  }
+}
