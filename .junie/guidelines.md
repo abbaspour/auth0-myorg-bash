@@ -13,7 +13,7 @@ The repository is organized into directories that correspond to Auth0 features a
 - **`details/`** : scripts to read and update org's details
 - **`domain/`**: scripts for Org's domain management
 - **`idp/`**: scripts for Org's IdP management
-- **`member/`**: scripts for Org's member management
+- **`members/`**: scripts for Org's member management
 
 ## Usage Guidelines
 
